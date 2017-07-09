@@ -85,20 +85,27 @@ double TAX_CALCULATOR(){
 	std::cout << std::fixed;										
 	std::cout << "The total price of the item rounded to the nearest cent is:\n";
 	std::cout << std::setprecision(2) << total_value << std::endl;
-	std::cout << "The total tax applied rounded o the nearest cent is:\n";
+	std::cout << "The total tax applied rounded to the nearest cent is \n";
 	std::cout << std::setprecision(2) << total_tax << std::endl;
 	return 0;
 }
 
 // This function will calculate the factorial of any positive integer the user inputs 
-float FACTORIAL() {
-	float n; 
+int FACTORIAL(){
+	int n;
 	int i = 1;
+	int factorial; 
 	std::cout << "You have selected the FACTORIAL calculator. \nThis function will calculate the factorial for any positive integer you enter." << std::endl;
-	std::cout << "Please input a positive integer" << std::endl;
-	std::cin >> n; 
-	/*TODO: What if they enter a string, or negative number or deicimal number*/
-	float factorial = n;
+	std::cout << "Please input a positive integer: ";
+	// Checks that an integer was entered and that it is either zero or greater than zero 
+	n = VALID_INT_INPUT();
+	while (n < 0) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "I cannot calculate the factorial for a negative number. Please enter a non-negative integer: ";
+		n = VALID_INT_INPUT();
+	}
+	factorial = n;
 	if (n == 0) {
 		std::cout << "The factorial of 0 is: 1" << std::endl;
 		return 0;
@@ -111,31 +118,52 @@ float FACTORIAL() {
 	return 0;
 }
 
-// This function will simulate a coin flip and return the results for the specified number of flips. 
+// This function will simulate a coin flip and return the results for the specified number of flips, and counts the total number of tails and heads flipped
 int COIN_FLIP()
 {
 	int flip_number;
 	int flip_result;
+	int tails = 0;
+	int heads = 0; 
 	int counter; 
+	int counted[2];
 	std::cout << "You selected the coin flip simulator." << std::endl;
 	std::cout << "This function will allow you select the number of flips and then display the results for the flips." << std::endl;
 	std::cout << "What is the total number of flips?\nPlease enter the number as a positive integer." << std::endl;
-	std::cin >> flip_number; 
-	/*TODO: What if they enter a string or negative number or very large number? */
-	if (flip_number == 0) {
-		std::cout << "You need to flip the coin at least once to obtain a result" << std::endl;
-	}
-	else {
-		std::cout << "The result is displayed with the flip number on the left and result on the right." << std::endl;
-		std::cout << "[flip number, flip result]" << std::endl;
-		for (counter = 1; counter <= flip_number; counter++) {
-			srand(time(NULL));	
-			flip_result = rand() % 2 + 1; 
-			std::cout << "The result for flip " << counter << " is " << flip_result << std::endl;
-			_sleep(2000);								// Prevents the same number from being generated again 
-
+	flip_number = VALID_INT_INPUT();
+	// Check that the input is valid (IE. Not zero or negative)
+	while (flip_number == 0 || flip_number < 0) {
+		if (flip_number == 0) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "You need to flip the coin at least once to obtain a result! Please enter a positive integer: ";
+			flip_number = VALID_INT_INPUT();
+		}
+		if (flip_number < 0) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "I cannot count a negative number of flips! Please enter a positive integer: ";
+			flip_number = VALID_INT_INPUT();
 		}
 	}
+	std::cout << "The result is displayed with the flip number on the left and result on the right." << std::endl;
+	for (counter = 1; counter <= flip_number; counter++) {
+		srand(time(NULL));
+		flip_result = rand() % 2 + 1;
+		std::cout << "The result for flip " << counter << " is " << flip_result << std::endl;
+		_sleep(1000);
+		// Count the number of heads and tails obtained in total 
+		if (flip_result == 1) {
+			heads = heads + 1; 
+		}
+		if (flip_result == 2) {
+			tails = tails + 1;
+		}
+		counted[0] = heads;
+		counted[1] = tails;
+	}
+	std::cout << "The total number of heads is: " << counted[0] << std::endl;
+	std::cout << "The total number of tails is: " << counted[1] << std::endl;
 	return 0;
 }
 
@@ -153,7 +181,6 @@ int FIBONACCI() {
 }
 */
 int main() {
-	TAX_CALCULATOR();
 	return 0;
 }
 

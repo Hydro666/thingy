@@ -1,2 +1,2 @@
 # thingy
-This is a simple repository where I will be uploading and modifying a simple program 
+This simple program was created by Aquiles Gomez with collaboration with Henry Lancell. This program will house simple functions that calculate values. This is purely for educational purposes to help learn how to code in C++ as well as use git for collaboration. 
